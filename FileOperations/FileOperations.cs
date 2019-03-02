@@ -53,8 +53,10 @@ namespace FileOperations
 
         }
 
-        public void DeleteFiles(string path)
+        public void DeleteFiles(string path) // Generic olmali daha sonra bu
         {
+            string zipPath = path + Path.DirectorySeparatorChar + "_temp_";
+
             System.IO.DirectoryInfo di = new DirectoryInfo(path);
 
             foreach (FileInfo file in di.GetFiles())

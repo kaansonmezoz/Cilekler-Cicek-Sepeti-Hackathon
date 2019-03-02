@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Business;
 using BusinessEntities;
 using FileOperations.Excel;
+using FileOperations;
 using FileOperations.Excel.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,6 +39,11 @@ namespace Api.Controllers
             List<Shop> shopList = excelReader.createShopList(shopListRows);
 
             Console.WriteLine(shopList[0].latitude);
+
+            FileOperations.FileOperations fileOperations = new FileOperations.FileOperations();
+
+            fileOperations.DeleteFiles(fileFolder);
+
 
             return shopList.Select((shop) => new ControllerEntities.Shop
             {
@@ -88,6 +94,12 @@ namespace Api.Controllers
             Console.WriteLine(string.Join("\n", assignedOrders.Select(x => x.Key + "  --->  " + x.Value).ToArray()));
             Console.WriteLine("   ");
 
+
+            FileOperations.FileOperations fileOperations = new FileOperations.FileOperations();
+
+            fileOperations.DeleteFiles(fileFolder);
+
+
             return assignedOrders;
         }
 
@@ -107,6 +119,10 @@ namespace Api.Controllers
             List<Row> orderListRows = excelReader.readFile(fileFolder, fileName, ORDERS_SHEET_NUMBER).rowList;
 
             List<Order> orderList = excelReader.createOrderList(orderListRows);
+
+            FileOperations.FileOperations fileOperations = new FileOperations.FileOperations();
+
+            fileOperations.DeleteFiles(fileFolder);
 
             return orderList.Select((order) => new ControllerEntities.Order{
                 orderNumber = order.orderNumber,
