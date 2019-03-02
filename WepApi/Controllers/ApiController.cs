@@ -37,11 +37,13 @@ namespace Api.Controllers
 
             List<Shop> shopList = excelReader.createShopList(shopListRows);
 
+            Console.WriteLine(shopList[0].latitude);
+
             return shopList.Select((shop) => new ControllerEntities.Shop
             {
                 name = shop.name,
-                latitude = shop.latitude,
-                longitude = shop.longitude
+                latitude = Convert.ToString(shop.latitude),
+                longitude = Convert.ToString(shop.longitude)
             }).ToList();
         }
 
