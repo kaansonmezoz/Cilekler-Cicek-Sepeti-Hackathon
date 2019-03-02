@@ -74,9 +74,9 @@ namespace Api.Controllers
             List<Row> shopListRows = excelReader.readFile(fileFolder, fileName, SHOPS_SHEET_NUMBER).rowList;
 
             List<Shop> shopList = excelReader.createShopList(shopListRows);
-
+            Console.Write(shopList.Count);
             Solution solution = new Solution(shopList, orderList);
-
+            Console.Write(shopList.Count);
             solution.shopList = shopList;
 
             solution.assignLimitsOfShops();
