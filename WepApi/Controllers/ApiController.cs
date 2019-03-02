@@ -107,7 +107,7 @@ namespace Api.Controllers
             return orderList.Select((order) => new ControllerEntities.Order{
                 orderNumber = order.orderNumber,
                 latitude = Convert.ToString(order.latitude).Replace(".", "#"),
-                longitude = Convert.ToString(order.longitude).Replace(".", "#")
+                longitude = Convert.ToString(order.longitude).Replace(",", "#")
             }).ToList();
         }
 
