@@ -89,7 +89,7 @@ namespace Api.Controllers
 
         [Route("orders")]
         [HttpGet]
-        public List<Order> GetOrders()
+        public List<ControllerEntities.Order> GetOrders()
         {
             const int ORDERS_SHEET_NUMBER = 0;
 
@@ -104,7 +104,11 @@ namespace Api.Controllers
 
             List<Order> orderList = excelReader.createOrderList(orderListRows);
 
-            return orderList;
+            return orderList.Select((order) => new ControllerEntities.Order{
+                orderNumber = order.orderNumber,
+                latitude = Convert.ToString(order.latitude),
+                longitude = Convert.ToString(order.longitude)
+            }).ToList();
         }
 
     }
