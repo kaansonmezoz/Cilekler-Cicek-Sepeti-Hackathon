@@ -94,8 +94,8 @@ namespace FileOperations.Excel
                 orderList.Add(new Order
                 {
                     orderNumber = Convert.ToInt32(cellList[INDEX].value),
-                    latitude = decimal.Parse(cellList[LAT_INDEX].value),
-                    longitude = decimal.Parse(cellList[LON_INDEX].value),
+                    latitude = cellList[LAT_INDEX].value,
+                    longitude = cellList[LON_INDEX].value,
                     distances = new Dictionary<string, decimal>()
                 });
             }
@@ -116,8 +116,8 @@ namespace FileOperations.Excel
                 shopList.Add(new Shop
                 {
                     name = cellList[INDEX].value,
-                    latitude = decimal.Parse(cellList[LAT_INDEX].value),
-                    longitude = decimal.Parse(cellList[LON_INDEX].value),
+                    latitude = cellList[LAT_INDEX].value,
+                    longitude = cellList[LON_INDEX].value,
                 });
             }
 

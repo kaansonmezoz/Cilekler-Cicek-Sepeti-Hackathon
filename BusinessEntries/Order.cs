@@ -6,8 +6,8 @@ namespace BusinessEntities
     public class Order
     {
         public int orderNumber { get; set; }
-        public decimal latitude { get; set; }
-        public decimal longitude { get; set; }
+        public string latitude { get; set; }
+        public string longitude { get; set; }
         public Dictionary<string, decimal> distances = new Dictionary<string, decimal>();
     }
 }

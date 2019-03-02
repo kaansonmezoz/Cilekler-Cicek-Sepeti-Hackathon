@@ -90,8 +90,15 @@ namespace Business
         public decimal calculateDistance(Shop shop, Order order)
         {
             //decimal distance =  Math.Pow(Math.Pow(shop.latitude - order.latitude, 2) + Math.Pow(shop.longitude - order.longitude, 2), 0.5);
-            decimal latitudeDistancePow = (shop.latitude - order.latitude) * (shop.latitude - order.latitude);
-            decimal longitudeDistancePow = (shop.longitude - order.longitude) * (shop.longitude - order.longitude);
+
+            decimal shopLat = decimal.Parse(shop.latitude);
+            decimal shopLon = decimal.Parse(shop.longitude);
+
+            decimal orderLat = decimal.Parse(order.latitude);
+            decimal orderLon = decimal.Parse(order.longitude);
+
+            decimal latitudeDistancePow = (shopLat - orderLat) * (shopLat - orderLat);
+            decimal longitudeDistancePow = (shopLon - orderLon) * (shopLon - orderLon);
 
 
             decimal distance = (decimal)Math.Pow((double)(latitudeDistancePow + longitudeDistancePow), 0.5);
