@@ -83,7 +83,7 @@ namespace FileOperations.Excel
 
             XmlDocument sharedStringsXml = new XmlDocument();
             sharedStringsXml.Load(sharedStringsPath);
-
+                
             XmlNodeList nodeList = sharedStringsXml.GetElementsByTagName("si");
 
 
@@ -91,7 +91,7 @@ namespace FileOperations.Excel
             {  //Todo: burada degerler basilinca null geliyor garip
                 XmlNode node = nodeList[i].FirstChild;
 
-                valueList.Add(node.InnerText);
+                valueList.Add(node.InnerXml);
             }
 
 

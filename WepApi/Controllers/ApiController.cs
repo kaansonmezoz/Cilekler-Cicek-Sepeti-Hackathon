@@ -42,8 +42,12 @@ namespace Api.Controllers
             return shopList.Select((shop) => new ControllerEntities.Shop
             {
                 name = shop.name,
-                latitude = Convert.ToString(shop.latitude),
-                longitude = Convert.ToString(shop.longitude)
+                
+                latitudeInteger = Convert.ToString(shop.latitude).Split(",")[0],
+                latitudeDecimal = Convert.ToString(shop.latitude).Split(",")[1],
+
+                longitudeInteger = Convert.ToString(shop.longitude).Split(",")[0],
+                longitudeDecimal = Convert.ToString(shop.longitude).Split(",")[1],
             }).ToList();
         }
 
@@ -106,8 +110,13 @@ namespace Api.Controllers
 
             return orderList.Select((order) => new ControllerEntities.Order{
                 orderNumber = order.orderNumber,
-                latitude = Convert.ToString(order.latitude).Replace(",", "D"),
-                longitude = Convert.ToString(order.longitude).Replace(",", "#")
+
+                latitudeInteger = Convert.ToString(order.latitude).Split(",")[0],
+                latitudeDecimal = Convert.ToString(order.latitude).Split(",")[1],
+
+                longitudeInteger = Convert.ToString(order.longitude).Split(",")[0],
+                longitudeDecimal = Convert.ToString(order.longitude).Split(",")[1],
+
             }).ToList();
         }
 
