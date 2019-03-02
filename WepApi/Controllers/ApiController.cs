@@ -38,13 +38,6 @@ namespace Api.Controllers
 
             List<Shop> shopList = excelReader.createShopList(shopListRows);
 
-            Console.WriteLine(shopList[0].latitude);
-
-            FileOperations.FileOperations fileOperations = new FileOperations.FileOperations();
-
-            fileOperations.DeleteFiles(fileFolder);
-
-
             return shopList.Select((shop) => new ControllerEntities.Shop
             {
                 name = shop.name,
@@ -94,12 +87,6 @@ namespace Api.Controllers
             Console.WriteLine(string.Join("\n", assignedOrders.Select(x => x.Key + "  --->  " + x.Value).ToArray()));
             Console.WriteLine("   ");
 
-
-            FileOperations.FileOperations fileOperations = new FileOperations.FileOperations();
-
-            fileOperations.DeleteFiles(fileFolder);
-
-
             return assignedOrders;
         }
 
@@ -120,9 +107,6 @@ namespace Api.Controllers
 
             List<Order> orderList = excelReader.createOrderList(orderListRows);
 
-            FileOperations.FileOperations fileOperations = new FileOperations.FileOperations();
-
-            fileOperations.DeleteFiles(fileFolder);
 
             return orderList.Select((order) => new ControllerEntities.Order{
                 orderNumber = order.orderNumber,
