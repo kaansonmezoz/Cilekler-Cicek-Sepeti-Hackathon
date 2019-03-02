@@ -52,7 +52,7 @@ namespace Api.Controllers
         }
 
 
-        [Route("result")]
+        [Route("results")]
         [HttpGet]
         //TODO: bir tane de 
         public Dictionary<int, string> GetResult()
