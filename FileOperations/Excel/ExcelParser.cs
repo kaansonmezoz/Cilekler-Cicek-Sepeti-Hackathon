@@ -104,7 +104,7 @@ namespace FileOperations.Excel
             {
                 foreach (Cell cell in row.cellList)
                 {
-                    Console.WriteLine(Convert.ToInt32(cell.stringIndex)];
+                    Console.WriteLine(valueList[Convert.ToInt32(cell.stringIndex)]);
                     cell.value = valueList[Convert.ToInt32(cell.stringIndex)].Replace(".", ",");
                     Console.WriteLine(cell.value);
                 }
