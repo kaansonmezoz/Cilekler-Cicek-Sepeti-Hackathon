@@ -91,7 +91,7 @@ namespace FileOperations.Excel
             {  //Todo: burada degerler basilinca null geliyor garip
                 XmlNode node = nodeList[i].FirstChild;
 
-                valueList.Add(node.InnerXml.Replace(".", ","));
+                valueList.Add(node.InnerXml);
             }
 
 
