@@ -91,7 +91,6 @@ namespace FileOperations.Excel
             {  //Todo: burada degerler basilinca null geliyor garip
                 XmlNode node = nodeList[i].FirstChild;
 
-                valueList.Add(node.InnerXml.Replace(".", ","));
             }
 
 
@@ -105,7 +104,9 @@ namespace FileOperations.Excel
             {
                 foreach (Cell cell in row.cellList)
                 {
+                    Console.WriteLine(cell.value);
                     cell.value = valueList[Convert.ToInt32(cell.stringIndex)].Replace(".", ",");
+                    Console.WriteLine(cell.value);
                 }
             }
         }
