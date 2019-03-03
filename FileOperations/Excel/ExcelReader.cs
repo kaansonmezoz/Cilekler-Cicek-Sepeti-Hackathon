@@ -1,20 +1,21 @@
 ﻿using BusinessEntities;
+using FileOperations.Entity;
 using FileOperations.Excel.Entities;
+using FileOperations.Interface;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+
 
 namespace FileOperations.Excel
 {
-    public class ExcelReader
+    public class ExcelReader : IFileReader
     {
         private const int INDEX = 0;
         private const int LAT_INDEX = 1;
         private const int LON_INDEX = 2;
 
-        public Worksheet readFile(string fileFolder, string fileName, int sheetNumber)
-        { //Windows Formatındaki excel dosyalarini okur
+        public ReadFileEntity ReadFile(string fileFolder, string fileName) {
             string zipPath = fileFolder + Path.DirectorySeparatorChar + "_temp_";
 
             FileOperations fileOperations = new FileOperations();
@@ -22,29 +23,20 @@ namespace FileOperations.Excel
 
             List<Worksheet> worksheet = extractWorkbook(zipPath);
 
-            Console.WriteLine("List<Worksheet> worksheet = extractWorkbook(zipPath);");
-            Console.WriteLine("Size of " + worksheet.Count);
-
-            //TODO: bu alayi icin yapilmasi gerekiyor.
-            List<Row> rowList = extractWorksheet(zipPath, worksheet[sheetNumber].id);
-            worksheet[sheetNumber].rowList = rowList;
-
-            Console.WriteLine("List<Row> rowList = extractWorksheet(zipPath, worksheet[sheetNumber].id);");
-            Console.WriteLine("Size of " + rowList.Count);
+            // Buradan sonrasi iste iki sheet icinde calisacak sekilde yapilmali
+            List<Row> orderRowList = extractWorksheet(zipPath, worksheet[0].id);
+            List<Row> shopRowList = extractWorksheet(zipPath, worksheet[1].id);
 
             List<string> sharedString = extractSharedString(zipPath);
 
-            Console.WriteLine("List<string> sharedString = extractSharedString(zipPath);");
-            Console.WriteLine("Size of " + sharedString.Count);
-
-
-            ExcelParser excelHelper = new ExcelParser();
-
-            excelHelper.mapCellValues(rowList, sharedString);
+            mapExcelRowValues(shopRowList, orderRowList, sharedString);
 
             fileOperations.DeleteFiles(zipPath);
 
-            return worksheet[sheetNumber];
+            return new ReadFileEntity{
+                orderList = createOrderList(orderRowList),
+                shopList  = createShopList(shopRowList)
+            };
         }
 
         private List<Worksheet> extractWorkbook(string zipOutputPath)
@@ -80,6 +72,13 @@ namespace FileOperations.Excel
             return operationsHelper.parseSharedStringsXml(sharedStringsFolder + Path.DirectorySeparatorChar + sharedStringsFileName);
         }
 
+        public void mapExcelRowValues(List<Row> shopRowList, List<Row> orderRowList, List<string> sharedString){
+
+            ExcelParser excelHelper = new ExcelParser();
+
+            excelHelper.mapCellValues(shopRowList, sharedString);
+            excelHelper.mapCellValues(orderRowList, sharedString);
+        }
 
         public List<Order> createOrderList(List<Row> orderListRows)
         {
@@ -91,12 +90,15 @@ namespace FileOperations.Excel
             {
                 List<Cell> cellList = orderListRows[i].cellList;
 
+                Console.WriteLine("orderNumber: " + cellList[INDEX].value);
+                Console.WriteLine("latitude: " + cellList[LAT_INDEX].value);
+                Console.WriteLine("longitude: " + cellList[LON_INDEX].value);
+
                 orderList.Add(new Order
                 {
                     orderNumber = Convert.ToInt32(cellList[INDEX].value),
                     latitude = cellList[LAT_INDEX].value,
-                    longitude = cellList[LON_INDEX].value,
-                    distances = new Dictionary<string, decimal>()
+                    longitude = cellList[LON_INDEX].value
                 });
             }
 

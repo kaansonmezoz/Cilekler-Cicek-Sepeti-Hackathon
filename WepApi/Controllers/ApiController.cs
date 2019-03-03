@@ -7,7 +7,9 @@ using FileOperations.Excel;
 using FileOperations;
 using FileOperations.Excel.Entities;
 using Microsoft.AspNetCore.Mvc;
-
+using FileOperations.Interface;
+using FileOperations.Factory;
+using FileOperations.Entity;
 
 namespace Api.Controllers
 {
@@ -23,20 +25,17 @@ namespace Api.Controllers
         [HttpGet]
         public List<ControllerEntities.Shop> GetShops()
         {
-            const int SHOPS_SHEET_NUMBER = 1;
-
             string absolutePath = Directory.GetCurrentDirectory();
             // Main'in yerini verir.
             string fileFolder = absolutePath + Path.DirectorySeparatorChar + "data"; // TODO: Bunlar disaridan parametre alacak seklinde
             string fileName = "siparis_ve_bayi_koordinatlari.xlsx";  // TODO: Duzeltilecek
 
-            ExcelReader excelReader = new ExcelReader();
+            FileReaderFactory factory = new FileReaderFactory();
+            IFileReader reader = factory.createFileReader(fileName.Split('.')[1]);
 
-            List<Row> shopListRows = excelReader.readFile(fileFolder, fileName, SHOPS_SHEET_NUMBER).rowList;
+            ReadFileEntity fileEntity = reader.ReadFile(fileFolder, fileName);
 
-            List<Shop> shopList = excelReader.createShopList(shopListRows);
-
-            return shopList.Select((shop) => new ControllerEntities.Shop
+            return fileEntity.shopList.Select((shop) => new ControllerEntities.Shop
             {
                 name = shop.name,
                 
@@ -56,20 +55,17 @@ namespace Api.Controllers
         [HttpGet]
         public List<ControllerEntities.Order> GetOrders()
         {
-            const int ORDERS_SHEET_NUMBER = 0;
-
             string absolutePath = Directory.GetCurrentDirectory();
             // Main'in yerini verir.
             string fileFolder = absolutePath + Path.DirectorySeparatorChar + "data"; // TODO: Bunlar disaridan parametre alacak seklinde
             string fileName = "siparis_ve_bayi_koordinatlari.xlsx";  // TODO: Duzeltilecek
 
-            ExcelReader excelReader = new ExcelReader();
+            FileReaderFactory factory = new FileReaderFactory();
+            IFileReader reader = factory.createFileReader(fileName.Split('.')[1]);
 
-            List<Row> orderListRows = excelReader.readFile(fileFolder, fileName, ORDERS_SHEET_NUMBER).rowList;
+            ReadFileEntity fileEntity = reader.ReadFile(fileFolder, fileName);
 
-            List<Order> orderList = excelReader.createOrderList(orderListRows);
-
-            return orderList.Select((order) => new ControllerEntities.Order{
+            return fileEntity.orderList.Select((order) => new ControllerEntities.Order{
                 orderNumber = order.orderNumber,
 
                 latitudeInteger = Convert.ToString(order.latitude).Split(",")[0],
