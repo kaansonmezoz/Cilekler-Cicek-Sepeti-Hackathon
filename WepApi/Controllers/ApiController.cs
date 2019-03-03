@@ -18,17 +18,13 @@ namespace Api.Controllers
     public class OrderController : ControllerBase
     {
 
-        //TODO: Olmayan route'lar icin de bir error handling yazmak lazim
-        //TODO: error handling falan gibi şeyler de eklesek fena olmaz
-
         [Route("shops")]
         [HttpGet]
         public List<ControllerEntities.Shop> GetShops()
         {
             string absolutePath = Directory.GetCurrentDirectory();
-            // Main'in yerini verir.
-            string fileFolder = absolutePath + Path.DirectorySeparatorChar + "data"; // TODO: Bunlar disaridan parametre alacak seklinde
-            string fileName = "siparis_ve_bayi_koordinatlari.xlsx";  // TODO: Duzeltilecek
+            string fileFolder = absolutePath + Path.DirectorySeparatorChar + "data"; 
+            string fileName = "siparis_ve_bayi_koordinatlari.xlsx";
 
             FileReaderFactory factory = new FileReaderFactory();
             IFileReader reader = factory.createFileReader(fileName.Split('.')[1]);
@@ -56,9 +52,8 @@ namespace Api.Controllers
         public List<ControllerEntities.Order> GetOrders()
         {
             string absolutePath = Directory.GetCurrentDirectory();
-            // Main'in yerini verir.
-            string fileFolder = absolutePath + Path.DirectorySeparatorChar + "data"; // TODO: Bunlar disaridan parametre alacak seklinde
-            string fileName = "siparis_ve_bayi_koordinatlari.xlsx";  // TODO: Duzeltilecek
+            string fileFolder = absolutePath + Path.DirectorySeparatorChar + "data";
+            string fileName = "siparis_ve_bayi_koordinatlari.xlsx";
 
             FileReaderFactory factory = new FileReaderFactory();
             IFileReader reader = factory.createFileReader(fileName.Split('.')[1]);

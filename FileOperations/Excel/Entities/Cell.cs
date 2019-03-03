@@ -8,6 +8,6 @@ namespace FileOperations.Excel.Entities
     {
         public int id { get; set; }
         public string value { get; set; }
-        public int stringIndex { get; set; } //SharedStrings.xml'deki ilgili deger.
+        public int stringIndex { get; set; }
     }
 }

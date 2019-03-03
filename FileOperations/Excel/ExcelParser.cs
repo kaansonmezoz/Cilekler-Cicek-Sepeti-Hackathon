@@ -10,7 +10,7 @@ namespace FileOperations.Excel
     {
 
         public List<Worksheet> parseWorkbookXml(string workbookPath)
-        {   // Todo: burada da factory pattern uygulanabilir parse etme islemi benzer olacak handler kismi falan filan sadece alinacak attribute'lar hangi xml dosyasi icerisinden alinacagina bagli olarak. hani loglama dosyalarinda yapmistik ya onun gibi bir sey yapilabilir.
+        {   
             List<Worksheet> worksheetList = new List<Worksheet>();
 
             XmlDocument workbookXml = new XmlDocument();
@@ -25,10 +25,6 @@ namespace FileOperations.Excel
                     name = nodeList[i].Attributes["name"].Value,
                     id = Convert.ToInt32(nodeList[i].Attributes["sheetId"].Value)
                 });
-
-                Console.WriteLine("------ Attributes -------");
-                Console.WriteLine(worksheetList[i].id);
-                Console.WriteLine(worksheetList[i].name);
             }
 
             return worksheetList;
@@ -38,14 +34,10 @@ namespace FileOperations.Excel
         {
             List<Row> rowList = new List<Row>();
 
-            Console.WriteLine("Reading file:" + sheetPath);
-
             XmlDocument worksheetList = new XmlDocument();
             worksheetList.Load(sheetPath);
 
-            XmlNodeList rowNodeList = worksheetList.GetElementsByTagName("row");
-            Console.WriteLine("XmlNodeList rowNodeList = worksheetList.GetElementsByTagName(row); ");
-            Console.WriteLine("Count: " + rowNodeList.Count);
+            XmlNodeList rowNodeList = worksheetList.GetElementsByTagName("row");           
 
             for (var i = 0; i < rowNodeList.Count; i++)
             {
@@ -54,9 +46,6 @@ namespace FileOperations.Excel
                 row.id = Convert.ToString(i);
 
                 XmlNodeList childNodeList = rowNodeList[i].ChildNodes;
-
-                //Console.WriteLine("----------- Inner Text -------");
-                //Console.WriteLine(rowNodeList[i].InnerXml);
 
                 for (var j = 0; j < childNodeList.Count; j++)
                 {
@@ -88,7 +77,7 @@ namespace FileOperations.Excel
 
 
             for (int i = 0; i < nodeList.Count; i++)
-            {  //Todo: burada degerler basilinca null geliyor garip
+            {  
                 XmlNode node = nodeList[i].FirstChild;
 
                 valueList.Add(node.InnerXml);

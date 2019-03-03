@@ -42,7 +42,6 @@ namespace FileOperations.Excel
             }
             else {
                 fileOperations.DeleteFiles(zipPath);
-                // boyle bir entity yok tarzinda bir sey vermek lazim
                 return null;
             }
 
@@ -95,15 +94,10 @@ namespace FileOperations.Excel
 
             List<Order> orderList = new List<Order>();
 
-            Console.WriteLine("orderListRows.Count: " + orderListRows.Count);
 
             for (int i = 1; i < orderListRows.Count; i++)
             {
                 List<Cell> cellList = orderListRows[i].cellList;
-
-                Console.WriteLine("orderNumber: " + cellList[INDEX].value);
-                Console.WriteLine("latitude: " + cellList[LAT_INDEX].value);
-                Console.WriteLine("longitude: " + cellList[LON_INDEX].value);
 
                 orderList.Add(new Order
                 {
@@ -126,7 +120,7 @@ namespace FileOperations.Excel
 
             Console.WriteLine(shopListRows.Count);
 
-            int[] minOrderLimit = { 20, 35, 20 };  // Buralar pek hos olmadi ama ...
+            int[] minOrderLimit = { 20, 35, 20 }; 
             int[] maxOrderLimit = { 30, 50, 80 };
 
             for (int i = 1; i < shopListRows.Count; i++)
