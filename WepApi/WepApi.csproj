@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BusinessEntries\BusinessEntries.csproj" />
-    <ProjectReference Include="..\Business\Business.csproj" />
     <ProjectReference Include="..\ControllerEntities\ControllerEntities.csproj" />
     <ProjectReference Include="..\FileOperations\FileOperations.csproj" />
   </ItemGroup>

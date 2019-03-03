@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using Business;
 using BusinessEntities;
 using FileOperations.Excel;
 using FileOperations;
@@ -53,44 +51,6 @@ namespace Api.Controllers
             }).ToList();
         }
 
-
-        [Route("results")]
-        [HttpGet]
-        //TODO: bir tane de 
-        public Dictionary<int, string> GetResult()
-        {
-            const int ORDERS_SHEET_NUMBER = 0;
-            const int SHOPS_SHEET_NUMBER = 1;
-
-            string absolutePath = Directory.GetCurrentDirectory();
-            // Main'in yerini verir.
-            string fileFolder = absolutePath + Path.DirectorySeparatorChar + "data"; // TODO: Bunlar disaridan parametre alacak seklinde
-            string fileName = "siparis_ve_bayi_koordinatlari.xlsx";  // TODO: Duzeltilecek
-
-            ExcelReader excelReader = new ExcelReader();
-
-            List<Row> orderListRows = excelReader.readFile(fileFolder, fileName, ORDERS_SHEET_NUMBER).rowList;
-
-            List<Order> orderList = excelReader.createOrderList(orderListRows);
-
-            List<Row> shopListRows = excelReader.readFile(fileFolder, fileName, SHOPS_SHEET_NUMBER).rowList;
-
-            List<Shop> shopList = excelReader.createShopList(shopListRows);
-            Console.Write(shopList.Count);
-            Solution solution = new Solution(shopList, orderList);
-            Console.Write(shopList.Count);
-            solution.shopList = shopList;
-
-            solution.mapProcessedOrders();
-
-
-            Dictionary<int, string> assignedOrders = solution.getAssignedOrders();
-
-            Console.WriteLine(string.Join("\n", assignedOrders.Select(x => x.Key + "  --->  " + x.Value).ToArray()));
-            Console.WriteLine("   ");
-
-            return assignedOrders;
-        }
 
         [Route("orders")]
         [HttpGet]
