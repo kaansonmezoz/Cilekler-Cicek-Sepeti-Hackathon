@@ -28,17 +28,6 @@ namespace Business
             this.orderList = orderList;
         }
 
-        public void assignLimitsOfShops()
-        {
-            shopList[0].minOrderLimit = 20;
-            shopList[0].maxOrderLimit = 30;
-            shopList[1].minOrderLimit = 35;
-            shopList[1].maxOrderLimit = 50;
-            shopList[2].minOrderLimit = 20;
-            shopList[2].maxOrderLimit = 80;
-        }
-
-
         public void mapProcessedOrders()
         {
 

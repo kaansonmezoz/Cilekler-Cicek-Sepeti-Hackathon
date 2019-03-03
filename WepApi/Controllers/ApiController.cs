@@ -47,6 +47,9 @@ namespace Api.Controllers
 
                 longitudeInteger = Convert.ToString(shop.longitude).Split(",")[0],
                 longitudeDecimal = Convert.ToString(shop.longitude).Split(",")[1],
+
+                minOrderLimit = shop.minOrderLimit,
+                maxOrderLimit = shop.maxOrderLimit
             }).ToList();
         }
 
@@ -78,7 +81,6 @@ namespace Api.Controllers
             Console.Write(shopList.Count);
             solution.shopList = shopList;
 
-            solution.assignLimitsOfShops();
             solution.mapProcessedOrders();
 
 
@@ -106,7 +108,6 @@ namespace Api.Controllers
             List<Row> orderListRows = excelReader.readFile(fileFolder, fileName, ORDERS_SHEET_NUMBER).rowList;
 
             List<Order> orderList = excelReader.createOrderList(orderListRows);
-
 
             return orderList.Select((order) => new ControllerEntities.Order{
                 orderNumber = order.orderNumber,

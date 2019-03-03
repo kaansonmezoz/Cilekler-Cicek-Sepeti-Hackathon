@@ -11,5 +11,8 @@ namespace ControllerEntities
 
         public string longitudeDecimal { get; set; }
         public string longitudeInteger { get; set; }
+
+        public int maxOrderLimit { get; set; }
+        public int minOrderLimit { get; set; }
     }
 }

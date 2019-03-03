@@ -109,6 +109,9 @@ namespace FileOperations.Excel
 
             Console.WriteLine(shopListRows.Count);
 
+            int[] minOrderLimit = { 20, 35, 20 };  // Buralar pek hos olmadi ama ...
+            int[] maxOrderLimit = { 30, 50, 80 };
+
             for (int i = 1; i < shopListRows.Count; i++)
             {
                 List<Cell> cellList = shopListRows[i].cellList;
@@ -118,6 +121,9 @@ namespace FileOperations.Excel
                     name = cellList[INDEX].value,
                     latitude = cellList[LAT_INDEX].value,
                     longitude = cellList[LON_INDEX].value,
+
+                    minOrderLimit = minOrderLimit[i - 1],
+                    maxOrderLimit = maxOrderLimit[i - 1]
                 });
             }
 
