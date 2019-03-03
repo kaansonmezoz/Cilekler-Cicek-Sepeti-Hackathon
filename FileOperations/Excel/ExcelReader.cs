@@ -15,7 +15,7 @@ namespace FileOperations.Excel
         private const int LAT_INDEX = 1;
         private const int LON_INDEX = 2;
 
-        public ReadFileEntity ReadFile(string fileFolder, string fileName) {
+        public ReadFileEntity ReadFile(string fileFolder, string fileName, string entity) {
             string zipPath = fileFolder + Path.DirectorySeparatorChar + "_temp_";
 
             FileOperations fileOperations = new FileOperations();
@@ -23,19 +23,34 @@ namespace FileOperations.Excel
 
             List<Worksheet> worksheet = extractWorkbook(zipPath);
 
-            // Buradan sonrasi iste iki sheet icinde calisacak sekilde yapilmali
-            List<Row> orderRowList = extractWorksheet(zipPath, worksheet[0].id);
-            List<Row> shopRowList = extractWorksheet(zipPath, worksheet[1].id);
-
             List<string> sharedString = extractSharedString(zipPath);
 
-            mapExcelRowValues(shopRowList, orderRowList, sharedString);
+            List<Row> orderRowList = null;
+            List<Row> shopRowList = null;
+
+            ExcelParser parser = new ExcelParser();
+
+            if (entity.Equals("shop") == true)
+            {
+                shopRowList = extractWorksheet(zipPath, worksheet[1].id);
+                parser.mapCellValues(shopRowList, sharedString);
+            }
+            else if (entity.Equals("order") == true)
+            {
+                orderRowList = extractWorksheet(zipPath, worksheet[0].id);
+                parser.mapCellValues(orderRowList, sharedString);
+            }
+            else {
+                fileOperations.DeleteFiles(zipPath);
+                // boyle bir entity yok tarzinda bir sey vermek lazim
+                return null;
+            }
 
             fileOperations.DeleteFiles(zipPath);
 
             return new ReadFileEntity{
                 orderList = createOrderList(orderRowList),
-                shopList  = createShopList(shopRowList)
+                shopList = createShopList(shopRowList)
             };
         }
 
@@ -72,16 +87,12 @@ namespace FileOperations.Excel
             return operationsHelper.parseSharedStringsXml(sharedStringsFolder + Path.DirectorySeparatorChar + sharedStringsFileName);
         }
 
-        public void mapExcelRowValues(List<Row> shopRowList, List<Row> orderRowList, List<string> sharedString){
-
-            ExcelParser excelHelper = new ExcelParser();
-
-            excelHelper.mapCellValues(shopRowList, sharedString);
-            excelHelper.mapCellValues(orderRowList, sharedString);
-        }
-
         public List<Order> createOrderList(List<Row> orderListRows)
         {
+            if (orderListRows == null) {
+                return null;
+            }
+
             List<Order> orderList = new List<Order>();
 
             Console.WriteLine("orderListRows.Count: " + orderListRows.Count);
@@ -107,6 +118,10 @@ namespace FileOperations.Excel
 
         public List<Shop> createShopList(List<Row> shopListRows)
         {
+            if (shopListRows == null) {
+                return null;
+            }
+
             List<Shop> shopList = new List<Shop>();
 
             Console.WriteLine(shopListRows.Count);

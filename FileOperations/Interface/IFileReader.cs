@@ -7,6 +7,6 @@ namespace FileOperations.Interface
 {
     public interface IFileReader
     {
-        ReadFileEntity ReadFile(string fileFolder, string fileName);
+        ReadFileEntity ReadFile(string fileFolder, string fileName, string entity);
     }
 }

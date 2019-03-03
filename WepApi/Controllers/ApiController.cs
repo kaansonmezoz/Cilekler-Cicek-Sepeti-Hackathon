@@ -33,7 +33,7 @@ namespace Api.Controllers
             FileReaderFactory factory = new FileReaderFactory();
             IFileReader reader = factory.createFileReader(fileName.Split('.')[1]);
 
-            ReadFileEntity fileEntity = reader.ReadFile(fileFolder, fileName);
+            ReadFileEntity fileEntity = reader.ReadFile(fileFolder, fileName, "shop");
 
             return fileEntity.shopList.Select((shop) => new ControllerEntities.Shop
             {
@@ -63,7 +63,7 @@ namespace Api.Controllers
             FileReaderFactory factory = new FileReaderFactory();
             IFileReader reader = factory.createFileReader(fileName.Split('.')[1]);
 
-            ReadFileEntity fileEntity = reader.ReadFile(fileFolder, fileName);
+            ReadFileEntity fileEntity = reader.ReadFile(fileFolder, fileName, "order");
 
             return fileEntity.orderList.Select((order) => new ControllerEntities.Order{
                 orderNumber = order.orderNumber,

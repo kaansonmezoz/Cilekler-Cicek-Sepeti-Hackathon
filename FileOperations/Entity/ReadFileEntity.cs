@@ -8,6 +8,6 @@ namespace FileOperations.Entity
     public class ReadFileEntity
     {
         public List<Order> orderList { get; set; }
-        public List<Shop>  shopList  { get; set; }
+        public List<Shop> shopList   { get; set; }
     }
 }
